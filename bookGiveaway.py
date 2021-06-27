@@ -218,8 +218,6 @@ def handleReceive():
             print(colors.red + "Please enter a valid number." + colors.reset)
             genreNum = input(colors.blue + "Enter your choice: " + colors.reset)
         booksFound = searchByGenre(genres[int(genreNum) - 1])
-        # printBooks(booksFound)
-        # getBook(booksFound)
         checkBookAvailability(booksFound)
     
     #user chooses to search by length
