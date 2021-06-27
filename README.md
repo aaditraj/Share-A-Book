@@ -1,5 +1,8 @@
 # Share A Book
 
+## Instructions
+>Ensure you have downloaded the .txt file and the main python file in the same directory so the program runs smoothly. This is a GUI and console-based program, so keep in mind that you will have to switch between these two interfaces.
+
 ## Inspiration
 >We all have books that are just lying around our homes, collecting dust. They usually just end up in the basement or with someone who doesn't even use them. With this platform, you can easily give your books to people in your community who are genuinely interested in reading them.  Think of it as a virtual book exchange!
 
