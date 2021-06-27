@@ -102,7 +102,16 @@ def printItems(itemList):
     index += 1
   print("------------------------------------------------------------")
 
-  
+
+def searchByAuthor(userInput): 
+  booksFound = []
+  newInput = userInput.lower().split(" ") #[rachel, carson]
+  for book in books:
+    for name in newInput:
+      if name in book["author"].lower().split(" "):
+        booksFound.append(book)
+  return booksFound
+
 #search books by genre and return result
 def searchByGenre(genre):
   booksFound = []
@@ -137,7 +146,7 @@ def getBook(booksFound):
   chosenBookNum = input(colors.blue + "Choose your book: " + colors.reset)
   while checkValidInput(chosenBookNum, len(booksFound)) == False:
       print(colors.red + "Please enter a valid number." + colors.reset)
-      chosenBookNum = input("Choose your book: ")
+      chosenBookNum = input(colors.blue + "Choose your book: " + colors.reset)
   chosenBook = booksFound[int(chosenBookNum) - 1]
   print(colors.green + "Successfully reserved!" + colors.reset)
   print("Contact the owner to receive this book: " + chosenBook.get("email").rstrip()) 
@@ -201,11 +210,12 @@ def handleReceive():
     donate_button["state"] = "disabled"
     get_button["state"] = "disabled"
     print("-------------------Get a Book-------------------")
-    print(colors.purple + "Would you like to search by genre or book length?" + colors.reset)
+    print(colors.purple + "Would you like to search by genre, book length, or author?" + colors.reset)
     print("1) Genre")
     print("2) Book Length")
+    print("3) Author")
     searchBy = input(colors.blue + "Enter your choice: " + colors.reset)
-    while checkValidInput(searchBy, 2) == False:
+    while checkValidInput(searchBy, 3) == False:
         print(colors.red + "Error. Please enter a valid number." + colors.reset)
         searchBy = input(colors.blue + "Enter your choice: " + colors.reset)
         
@@ -233,6 +243,10 @@ def handleReceive():
         else:  
             parameters = lengthOptions[int(selection)-1].split("-")
             booksFound = searchByLength(int(parameters[0]), int(parameters[1]))
+        checkBookAvailability(booksFound)
+    elif int(searchBy) == 3:
+        author = input(colors.blue + "Enter author name: " + colors.reset)
+        booksFound = searchByAuthor(author)
         checkBookAvailability(booksFound)
     handleProgramEnd()
 
