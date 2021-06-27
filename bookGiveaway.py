@@ -1,33 +1,39 @@
 import tkinter as tk
 import sys
 
+#create window
 root = tk.Tk()
 root.title('Share A Book')
+#disable ability to resize
 root.resizable(False, False)
 
+#create canvas to display basic menu options
 canvas = tk.Canvas(root, width=800, height=500, bg="#FFECF0")
 canvas.grid(columnspan=5, rowspan=5)
 
-
+#display instructions for main main console
 instructions = tk.Label(root, text="Would you like to receive or donate a book?", font=("Raleway", 25), bg="#FFECF0", fg="#FD728D")
 instructions.grid(columnspan=5, column=0, row=1)
 
+#donate button on main menu
 browse_text = tk.StringVar()
 donate_button = tk.Button(root, textvariable=browse_text, command=lambda:showTextBox("Donate"), font=("Raleway", 20), borderwidth=20, fg="#4786BD", height=3, width=16)
 browse_text.set("Donate")
 donate_button.grid(column=1, row=2)
 
+#receive button on main menu
 browse_text2 = tk.StringVar()
 get_button = tk.Button(root, textvariable=browse_text2, command=lambda:showTextBox("Receive"), font=("Raleway", 20), borderwidth=20, fg="#4786BD", height=3, width=16)
 browse_text2.set("Receive")
 get_button.grid(column=3, row=2)
 
-
+#quit button on main menu
 browse_text3 = tk.StringVar()
 quit_button = tk.Button(root, textvariable=browse_text3, command=lambda:quitImmediate(), font=("Raleway", 20), borderwidth=20, fg="#4786BD", height=3, width=16)
 browse_text3.set("Quit")
 quit_button.grid(column=2, row=3)
 
+#redirect user to console after button is pressed, execute appropriate workflow
 def showTextBox(directions):
     redirect = tk.Label(root, text="Go to console", font=("Raleway", 20), bg="white", fg="black")
     redirect.grid(columnspan=5, column = 0, row = 4, ipadx=5, ipady=5)
@@ -77,7 +83,6 @@ def writeUpdatedBooksList():
     bookLine += book.get("email")
     fh.write(bookLine)  
 
-
 #print out a list of books in table format
 def printBooks(books):
   print("-----------------------------------------------------------------------------------------------------------")
@@ -98,7 +103,7 @@ def printItems(itemList):
   print("------------------------------------------------------------")
 
   
-#search books by genre and returns result
+#search books by genre and return result
 def searchByGenre(genre):
   booksFound = []
   for book in books:
@@ -115,7 +120,7 @@ def getGenres():
       genres.append(genre)
   return genres
 
-#searches for books of certain length
+#searches for books of certain length and return result
 def searchByLength(minLen, maxLen): 
   booksFound = []
   for book in books:
@@ -136,7 +141,7 @@ def getBook(booksFound):
   chosenBook = booksFound[int(chosenBookNum) - 1]
   print(colors.green + "Successfully reserved!" + colors.reset)
   print("Contact the owner to receive this book: " + chosenBook.get("email").rstrip()) 
-#   books.remove(chosenBook) #remove book from book list
+  books.remove(chosenBook) #remove book from book list
 
 #checks if a user entry is valid, if not will give error message
 def checkValidInput(entry, numberOfOptions):
@@ -165,6 +170,7 @@ createBooksList()
 
 backToMain = 1		#default
 
+#execute function if user would like to donate a book
 def handleDonate():
     donate_button["state"] = "disabled"
     get_button["state"] = "disabled"
@@ -190,6 +196,7 @@ def handleDonate():
     print(colors.green + "Successfully added!" + colors.reset)
     handleProgramEnd()
 
+#execute function if user would like to receive a book
 def handleReceive():
     donate_button["state"] = "disabled"
     get_button["state"] = "disabled"
@@ -231,6 +238,7 @@ def handleReceive():
         checkBookAvailability(booksFound)
     handleProgramEnd()
 
+#quit program
 def quitImmediate():
     writeUpdatedBooksList()
     print(colors.purple + "Goodbye." + colors.reset)
